@@ -15,9 +15,25 @@ export function applyRGMask (value) {
 export function applyPhoneMask (phoneNumber) {
     const sanitizedNumber = removeNonNumerics(phoneNumber);
 
-    if (sanitizedNumber.length >= 11) {
-        return applyPattern(sanitizedNumber, '(XX) XXXXX-XXXX');
+    switch (sanitizedNumber.length) {
+        case 9:
+            return applyPattern(sanitizedNumber, 'XXXXX-XXXX');
+        case 10:
+            return applyPattern(sanitizedNumber, '(XX) XXXX-XXXX');
+        case 11:
+            return applyPattern(sanitizedNumber, '(XX) XXXXX-XXXX');
+        default:
+            return applyPattern(sanitizedNumber, 'XXXX-XXXX');
     }
+}
 
-    return applyPattern(sanitizedNumber, '(XX) XXXX-XXXX');
+export function applyCurrencyMask (currency) {
+    // TODO: Add cents
+
+    const pattern = Number(currency.replace(/(\.|,)/g, ''))
+        .toFixed(2)
+        .replace(/(\d)(?=(\d{3})+\.)/g, '$1.')
+        .replace(/\d/g, 'X');
+
+    return applyPattern(currency, pattern);
 }

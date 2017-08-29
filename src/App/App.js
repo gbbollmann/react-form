@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { applyPhoneMask } from '../Utils/Masks/masks';
+import { applyPhoneMask, applyCurrencyMask } from '../Utils/Masks/masks';
 
 class App extends Component {
     constructor (props) {
@@ -13,7 +13,7 @@ class App extends Component {
 
     handleChange ({ target: { value }}) {
         this.setState({
-            inputValue: applyPhoneMask(value)
+            inputValue: applyCurrencyMask(value)
         });
     }
 
@@ -21,8 +21,8 @@ class App extends Component {
         return (
             <div className="App">
                 <input
-                    maxLength="15"
-                    minLength="15"
+                    maxLength="14"
+                    minLength="14"
                     type="tel"
                     onChange={this.handleChange.bind(this)}
                     value={this.state.inputValue} />
